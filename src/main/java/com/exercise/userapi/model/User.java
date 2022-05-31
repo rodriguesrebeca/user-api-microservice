@@ -12,28 +12,28 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
     private String id = UUID.randomUUID().toString();
-    @Column(name = "name")
+    @Column
     private String name;
-    @Column(name = "cpf")
+    @Column
     private String cpf;
-    @Column(name = "email")
+    @Column
     private String email;
-    @Column(name = "password")
+    @Column
     private String password;
-    @Column(name = "phone-number")
+    @Column
     private String phoneNumber;
 
     //todo: verificar se mantem cascade
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<OrderId> orderIds;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<FinishedOrderId> finishedOrderIds;
 

@@ -4,6 +4,9 @@ import com.exercise.userapi.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Data
 @NoArgsConstructor
 public class UserResponse {
@@ -21,4 +24,5 @@ public class UserResponse {
         phoneNumber = user.getPhoneNumber();
         email = user.getEmail();
     }
+
 }

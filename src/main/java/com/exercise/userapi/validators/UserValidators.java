@@ -1,6 +1,7 @@
 package com.exercise.userapi.validators;
 
 import com.exercise.userapi.model.User;
+import com.exercise.userapi.repository.UserRepository;
 import com.exercise.userapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -10,12 +11,12 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class UserValidators {
 
-    private final UserService userService;
-    //private final UserRepository userRepository;
+//    private final UserService userService;
+    private final UserRepository userRepository;
 
     public List<String> validate(User user){
 
@@ -36,13 +37,13 @@ public class UserValidators {
         if (!StringUtils.hasText(user.getName())) {
             validationErrors.add("Nome obrigatório");
         }
-        if (userService.getById(user.getId()) == null) {
+//        if (userService.getById(user.getId()) == null) {
+//            validationErrors.add("usuário não existe");
+//        }
+
+       if (userRepository.findById(user.getId()) == null) {
             validationErrors.add("usuário não existe");
         }
-
-/*        if (userRepository.findById(user.getId()) == null) {
-            validationErrors.add("usuário não existe");
-        }*/
 
         return validationErrors;
     }

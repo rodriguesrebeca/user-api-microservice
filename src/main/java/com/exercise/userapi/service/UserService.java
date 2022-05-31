@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -21,8 +23,9 @@ public class UserService {
     }
 
     public UserResponse create(UserRequest userRequest) {
+
         String cpf = userRequest.getCpf();
-        User user = userRepository.findByCpf(cpf);
+        User user = userRepository.findFirstByCpf(cpf);
         if(user != null){
             return new UserResponse(user);
         }
@@ -32,18 +35,23 @@ public class UserService {
         return userResponse;
     }
 
-    private void delete(String id) {
-        userRepository.deleteById(id);
+    public List<User> getAll(){
+        return userRepository.findAll();
     }
 
-    public UserResponse update(UserRequest userRequest) {
-        User user = userRepository.findById(userRequest.getId()).get();
+    public void delete(String id) {
+        userRepository.deleteById(id);
+    }
+    public UserResponse update(UserRequest userRequest, String id) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setName(userRequest.getName());
+        user.setPassword(userRequest.getPassword());
+        user.setEmail(userRequest.getEmail());
         val validationErrors = userValidators.validate(user);
 
         if(!validationErrors.isEmpty()) {
             throw new ValidationException(validationErrors);
         }
-
         return new UserResponse(userRepository.save(user));
     }
 

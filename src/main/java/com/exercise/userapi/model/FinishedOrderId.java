@@ -1,11 +1,15 @@
 package com.exercise.userapi.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.util.UUID;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class FinishedOrderId {
 
@@ -13,6 +17,6 @@ public class FinishedOrderId {
     private String id = UUID.randomUUID().toString();
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    @JoinColumn(name = "users_id", referencedColumnName = "id")
+    private User users;
 }
